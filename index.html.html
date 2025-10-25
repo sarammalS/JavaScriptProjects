@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alien Registration Portal - CRT Style</title>
+<style>
+  body {
+    background: #000;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    padding: 50px;
+  }
+  h1 {
+    text-align: center;
+    text-shadow: 0 0 5px #00ff00;
+  }
+  form {
+    max-width: 600px;
+    margin: auto;
+    border: 2px solid #74a574;
+    padding: 20px;
+    box-shadow: 0 0 15px #72b372;
+  }
+  .form-group {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 10px 0;
+  }
+  label {
+    width: 200px;
+    text-align: right;
+    margin-right: 10px;
+    text-shadow: 0 0 3px #00ff00;
+  }
+  input, select {
+    flex: 1;
+    padding: 8px;
+    background: #000;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    box-shadow: 0 0 5px #00ff00;
+  }
+  input:focus, select:focus {
+    outline: none;
+    box-shadow: 0 0 10px #00ff00;
+  }
+  button {
+    padding: 15px 25px;
+    cursor: pointer;
+    background: #000;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    font-weight: bold;
+    text-shadow: 0 0 5px #00ff00;
+    margin-top: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  button:hover {
+    box-shadow: 0 0 15px #00ff00;
+  }
+  #thankYou {
+    display: none;
+    font-size: 1.5em;
+    margin-top: 30px;
+    color: #ff0;
+    text-align: center;
+    text-shadow: 0 0 10px #ff0;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<h1>🛸 Alien Registration Portal 🛸</h1>
+
+<form id="alienForm">
+  <div class="form-group">
+    <label for="planetName">Planet Name:</label>
+    <input type="text" id="planetName" placeholder="Only vowels + digits" required>
+  </div>
+
+  <div class="form-group">
+    <label for="antennaCount">Antenna Count:</label>
+    <input type="number" id="antennaCount" placeholder="Even number" required>
+  </div>
+
+  <div class="form-group">
+    <label for="alienID">Alien ID:</label>
+    <input type="text" id="alienID" placeholder="ZOR-XY_9999@UFO" required>
+  </div>
+
+  <div class="form-group">
+    <label for="landingDate">Landing Date:</label>
+    <input type="date" id="landingDate" required>
+  </div>
+
+  <div class="form-group">
+    <label for="spaceshipName">Spaceship Name:</label>
+    <input type="text" id="spaceshipName" placeholder="Capital letter start" required>
+  </div>
+
+  <div class="form-group">
+    <label for="earthFood">Favorite Earth Food:</label>
+    <input type="text" id="earthFood" placeholder="3+ letters, optional emoji" required>
+  </div>
+
+  <div class="form-group">
+    <label for="tentacles">Number of Tentacles:</label>
+    <input type="number" id="tentacles" placeholder="1-12" required>
+  </div>
+
+  <div class="form-group">
+    <label for="galacticRank">Galactic Rank:</label>
+    <select id="galacticRank" required>
+      <option value="">Select</option>
+      <option value="Scout">Scout</option>
+      <option value="Commander">Commander</option>
+      <option value="Overlord">Overlord</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="secretPhrase">Secret Earth Phrase:</label>
+    <input type="text" id="secretPhrase" placeholder="5+ chars" required>
+  </div>
+
+  <button type="submit">Register</button>
+</form>
+
+<div id="thankYou">🚀 Thank you for registering, interstellar traveler!</div>
+
+<script>
+document.getElementById("alienForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const planetName = document.getElementById("planetName").value;
+  const antennaCount = document.getElementById("antennaCount").value;
+  const alienID = document.getElementById("alienID").value;
+  const landingDate = new Date(document.getElementById("landingDate").value);
+  const spaceshipName = document.getElementById("spaceshipName").value;
+  const earthFood = document.getElementById("earthFood").value;
+  const tentacles = document.getElementById("tentacles").value;
+  const galacticRank = document.getElementById("galacticRank").value;
+  const secretPhrase = document.getElementById("secretPhrase").value;
+
+  // ✅ Planet Name: only vowels and digits + must include at least one vowel and one digit
+  if (!/^(?=.*[aeiouAEIOU])(?=.*\d)[aeiouAEIOU0-9]+$/.test(planetName)) {
+    return alert("Planet Name must contain only vowels and digits — at least one vowel and one digit required!");
+  }
+
+  // ✅ Antenna Count: must be even
+  if (antennaCount % 2 !== 0) {
+    return alert("Antenna Count must be even!");
+  }
+
+  // ✅ Alien ID: strict pattern
+  if (!/^ZOR-[A-Z]{2}_\d{4}@UFO$/.test(alienID)) {
+    return alert("Alien ID format invalid!");
+  }
+
+  // ✅ Landing Date: cannot be in past
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  if (landingDate < today) {
+    return alert("Landing Date cannot be in the past!");
+  }
+
+  // ✅ Spaceship Name: must start with capital
+  if (!/^[A-Z][a-zA-Z0-9]*$/.test(spaceshipName)) {
+    return alert("Spaceship Name invalid! It must start with a capital letter.");
+  }
+
+  // ✅ Earth Food: at least 3 letters (emoji optional)
+  if (!/^[a-zA-Z]{3,}[\p{S}]?$/u.test(earthFood)) {
+    return alert("Favorite Earth Food invalid! Must have 3+ letters.");
+  }
+
+  // ✅ Tentacles: between 1 and 12
+  if (!(tentacles >= 1 && tentacles <= 12)) {
+    return alert("Tentacles must be between 1 and 12!");
+  }
+
+  // ✅ Galactic Rank: must be chosen
+  if (!["Scout", "Commander", "Overlord"].includes(galacticRank)) {
+    return alert("Select a valid Galactic Rank!");
+  }
+
+  // ✅ Secret Phrase: at least 5 characters
+  if (secretPhrase.length < 5) {
+    return alert("Secret Earth Phrase must be at least 5 characters long!");
+  }
+
+  // ✅ Success message
+  document.getElementById("alienForm").style.display = "none";
+  document.getElementById("thankYou").style.display = "block";
+});
+</script>
+
+</body>
+</html>
