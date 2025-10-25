@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alien Registration Portal</title>
+<style>
+  body { font-family: 'Courier New', monospace; background: #0d0d2b; color: #a0f0ff; padding: 50px; }
+  form { max-width: 600px; margin: auto; }
+  .form-group { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; }
+  label { width: 200px; text-align: right; margin-right: 10px; }
+  input, select { flex: 1; padding: 8px; }
+  button { padding: 20px 20px; cursor: pointer; background: #00ff99; border: none; color: #000; font-weight: bold; margin-top: 20px;margin-left:350px; }
+  #thankYou { display: none; font-size: 1.5em; margin-top: 30px; color: #ffdd00; text-align: center; }
+</style>
+</head>
+<body>
+
+<h1 style="text-align:center;"> Alien Registration Portal A </h1>
+<form id="alienForm">
+  <div class="form-group">
+    <label for="planetName">Planet Name:</label>
+    <input type="text" id="planetName" placeholder="vowel + digit" required>
+  </div>
+
+  <div class="form-group">
+    <label for="antennaCount">Antenna Count:</label>
+    <input type="number" id="antennaCount" placeholder="even number" required>
+  </div>
+
+  <div class="form-group">
+    <label for="alienID">Alien ID:</label>
+    <input type="text" id="alienID" placeholder="ZOR-XY_9999@UFO" required>
+  </div>
+
+  <div class="form-group">
+    <label for="landingDate">Landing Date:</label>
+    <input type="date" id="landingDate" required>
+  </div>
+
+  <div class="form-group">
+    <label for="spaceshipName">Spaceship Name:</label>
+    <input type="text" id="spaceshipName" placeholder="Capital letter start" required>
+  </div>
+
+  <div class="form-group">
+    <label for="earthFood">Favorite Earth Food:</label>
+    <input type="text" id="earthFood" placeholder="3+ letters, optional emoji" required>
+  </div>
+
+  <div class="form-group">
+    <label for="tentacles">Number of Tentacles:</label>
+    <input type="number" id="tentacles" placeholder="1-12" required>
+  </div>
+
+  <div class="form-group">
+    <label for="galacticRank">Galactic Rank:</label>
+    <select id="galacticRank" required>
+      <option value="">Select</option>
+      <option value="Scout">Scout</option>
+      <option value="Commander">Commander</option>
+      <option value="Overlord">Overlord</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="secretPhrase">Secret Earth Phrase:</label>
+    <input type="text" id="secretPhrase" placeholder="5+ chars" required>
+  </div>
+
+  <button type="submit">Register</button>
+</form>
+
+<div id="thankYou">Thank you for registering, interstellar traveler!</div>
+
+<script>
+document.getElementById("alienForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const planetName = document.getElementById("planetName").value;
+  const antennaCount = document.getElementById("antennaCount").value;
+  const alienID = document.getElementById("alienID").value;
+  const landingDate = new Date(document.getElementById("landingDate").value);
+
+  const spaceshipName = document.getElementById("spaceshipName").value;
+  const earthFood = document.getElementById("earthFood").value;
+  const tentacles = document.getElementById("tentacles").value;
+  const galacticRank = document.getElementById("galacticRank").value;
+  const secretPhrase = document.getElementById("secretPhrase").value;
+
+  if(!/(?=.*[aeiouAEIOU])(?=.*\d)/.test(planetName)) return alert("Planet Name needs a vowel and a digit!");
+  if(antennaCount % 2 !== 0) return alert("Antenna Count must be even!");
+  if(!/^ZOR-[A-Z]{2}_\d{4}@UFO$/.test(alienID)) return alert("Alien ID format invalid!");
+  if(landingDate < new Date()) return alert("Landing Date cannot be in the past!");
+  if(!/^[A-Z][a-zA-Z0-9]*$/.test(spaceshipName)) return alert("Spaceship Name invalid!");
+  if(!/^[a-zA-Z]{3,}[\p{S}]?$/u.test(earthFood)) return alert("Favorite Earth Food invalid!");
+  if(!(tentacles >= 1 && tentacles <= 12)) return alert("Tentacles must be 1-12!");
+  if(!["Scout","Commander","Overlord"].includes(galacticRank)) return alert("Select a valid Galactic Rank!");
+  if(secretPhrase.length < 5) return alert("Secret Earth Phrase must be at least 5 characters!");
+
+  document.getElementById("alienForm").style.display = "none";
+  document.getElementById("thankYou").style.display = "block";
+});
+</script>
+
+</body>
+</html>
